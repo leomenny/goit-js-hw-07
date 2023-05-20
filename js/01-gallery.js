@@ -1,5 +1,4 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
 
 const galleryItemsMarkup = galleryItems.map(
   ({ preview, original, description }) =>
@@ -17,23 +16,62 @@ const galleryItemsMarkup = galleryItems.map(
 const galleryList = document.querySelector(".gallery");
 galleryList.insertAdjacentHTML("beforeend", galleryItemsMarkup);
 
+
 galleryList.addEventListener('click', event => {
   event.preventDefault();
-  if (!event.target.classList.contains('gallery__image')) {
-    return;
-  }
-  const imageSrc = event.target.dataset.source;
+  
+  const source = event.target.dataset.source;
+
   const instance = basicLightbox.create(`
-    <img src="${imageSrc}" width="" height="">
+    <img src="${source}" width="800" height="600">
 `);
   instance.show();
-});
 
 document.addEventListener('keydown', event => {
-  const instance = basicLightbox.getInstance();
-  if (event.code === 'Escape' && instance.visible()) {
+  if (event.code === 'Escape') {
     instance.close();
   }
+})
 });
+
+
+
+
+// galleryList.addEventListener('click', event => {
+//     event.preventDefault()
+//     if(event.target.nodeName !== 'IMG') {
+//       return;
+//     }
+
+// const source = event.target.dataset.source;
+//    const instance = basicLightbox.create(`
+// 		<img src="${source}" width="800" height="600">
+// 	`), {
+//     onShow: (instance) => { 
+//     window.addEventListener('keydown', showImg => {
+//     showImg.preventDefault();
+//     instance.show();
+// })
+// };
+//   onClose: (instance) => { 
+//   window.removeEventListener('keydown', closeImg => {
+//     if(event.code === 'Escape') {
+//     instance.close();
+//     }
+//   })
+//   }
+// }
+//   });
+  
+
+
+ 
+
+
 console.log(galleryItems);
+
+
+
+
+
 
