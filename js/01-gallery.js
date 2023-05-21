@@ -13,63 +13,51 @@ const galleryItemsMarkup = galleryItems.map(
        </a>
      </li>`
 ).join("");
-const galleryList = document.querySelector(".gallery");
+const galleryList = document.querySelector('.gallery');
 galleryList.insertAdjacentHTML("beforeend", galleryItemsMarkup);
 
-
-galleryList.addEventListener('click', event => {
+galleryList.addEventListener('click', (event) => {
   event.preventDefault();
-  
-  const source = event.target.dataset.source;
 
-  const instance = basicLightbox.create(`
-    <img src="${source}" width="800" height="600">
-`);
-  instance.show();
+  if (event.target.nodeName === 'IMG') {
+    const largeSourse = event.target.dataset.source;
 
-document.addEventListener('keydown', event => {
-  if (event.code === 'Escape') {
-    instance.close();
+    const instance = basicLightbox.create(`
+      <img src="${largeSourse}" width="800" height="600">
+    `);
+
+    instance.show();
+   
+    const closeEscape = (event) => {
+      if (event.key === 'Escape') {
+        instance.close();
+      }
+    };
+
+    window.addEventListener('keydown', closeEscape);
+    
+    instance.on('close', () => {
+      window.removeEventListener('keydown', closeEscape);
+    });
   }
-})
 });
 
-
-
-
-// galleryList.addEventListener('click', event => {
-//     event.preventDefault()
-//     if(event.target.nodeName !== 'IMG') {
-//       return;
-//     }
-
-// const source = event.target.dataset.source;
-//    const instance = basicLightbox.create(`
-// 		<img src="${source}" width="800" height="600">
-// 	`), {
-//     onShow: (instance) => { 
-//     window.addEventListener('keydown', showImg => {
-//     showImg.preventDefault();
-//     instance.show();
-// })
-// };
-//   onClose: (instance) => { 
-//   window.removeEventListener('keydown', closeImg => {
-//     if(event.code === 'Escape') {
-//     instance.close();
-//     }
-//   })
-//   }
-// }
-//   });
   
+//   const source = event.target.dataset.source;
 
+//   const instance = basicLightbox.create(`
+//     <img src="${source}" width="800" height="600">
+// `);
+//   instance.show();
 
- 
+// document.addEventListener('keydown', event => {
+//   if (event.code === 'Escape') {
+//     instance.close();
+//   }
+// })
+// });
 
-
-console.log(galleryItems);
-
+// console.log(galleryItems);
 
 
 
