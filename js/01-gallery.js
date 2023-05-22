@@ -24,40 +24,53 @@ galleryList.addEventListener('click', (event) => {
 
     const instance = basicLightbox.create(`
       <img src="${largeSourse}" width="800" height="600">
-    `);
+    `, {
+      onShow: (instance) => {
+        const closeEscape = (event) => {
+          if (event.key === 'Escape') {
+            instance.close();
+          }
+        };
 
-    instance.show();
-   
-    const closeEscape = (event) => {
-      if (event.key === 'Escape') {
-        instance.close();
+        window.addEventListener('keydown', closeEscape);
+
+        instance.element().addEventListener('click', (event) => {
+          if (event.target.nodeName !== 'IMG') {
+            instance.close();
+          }
+        });
+        
+        onClose: (instance) => {
+          window.removeEventListener('keydown', closeEscape);
+        };
       }
-    };
-
-    window.addEventListener('keydown', closeEscape);
-    
-    instance.on('close', () => {
-      window.removeEventListener('keydown', closeEscape);
     });
+    instance.show();
   }
 });
 
-  
-//   const source = event.target.dataset.source;
+//     const instance = basicLightbox.create(`
+//       <img src="${largeSourse}" width="800" height="600">
+//     `);
+//     instance.show();
+//      const closeEscape = (event) => {
+//       if (event.key === 'Escape') {
+//         instance.close();
+//       }
+//     };
 
-//   const instance = basicLightbox.create(`
-//     <img src="${source}" width="800" height="600">
-// `);
-//   instance.show();
-
-// document.addEventListener('keydown', event => {
-//   if (event.code === 'Escape') {
-//     instance.close();
+//     window.addEventListener('keydown', closeEscape);
+    
+//     instance.on('close', () => {
+//       window.removeEventListener('keydown', closeEscape);
+//     });
 //   }
-// })
 // });
 
-// console.log(galleryItems);
+
+
+
+
 
 
 
